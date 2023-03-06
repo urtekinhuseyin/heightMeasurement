@@ -41,7 +41,7 @@ def detect_line(data,image,cm):
     calculation = []
     for i in range(len(data)):
         if (cm[i]>=0 )& (cm[i]<10000):
-            CroppedImage = im.crop((int(data[i]["xmin"]), int(data[i]["ymin"]),int(data[i]["xmax"]) ,int(data[i]["ymax"])))
+            CroppedImage = image.crop((int(data[i]["xmin"]), int(data[i]["ymin"]),int(data[i]["xmax"]) ,int(data[i]["ymax"])))
             rate  =[]
             threshold_ranges=range(40,161,5)
             originalImage = CroppedImage
@@ -94,7 +94,7 @@ def process_image():
         results = model(img)  
         resultJson = results.pandas().xyxy[0].to_json(orient="records")
         data = json.loads(resultJson)
-        cm = detect_number(data,im,model_number)
+        cm = detect_number(data,img,model_number)
         calculation , threshold = detect_line(data,im,cm)
         result,plaka_no = decition_measure(cm,calculation) 
         confidence =  data[plaka_no]["confidence"]
